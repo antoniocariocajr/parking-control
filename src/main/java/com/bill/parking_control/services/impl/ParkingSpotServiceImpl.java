@@ -1,7 +1,7 @@
 package com.bill.parking_control.services.impl;
 
-import com.bill.parking_control.dtos.ParkingSpotCreateDTO;
-import com.bill.parking_control.dtos.ParkingSpotResponseDTO;
+import com.bill.parking_control.dtos.spot.ParkingSpotCreateDTO;
+import com.bill.parking_control.dtos.spot.ParkingSpotResponseDTO;
 import com.bill.parking_control.persitenses.entities.ParkingSpot;
 import com.bill.parking_control.persitenses.repositories.ParkingSpotRepository;
 import com.bill.parking_control.services.ParkingSpotService;

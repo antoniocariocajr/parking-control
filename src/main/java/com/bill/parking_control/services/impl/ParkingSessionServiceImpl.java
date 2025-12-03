@@ -1,7 +1,7 @@
 package com.bill.parking_control.services.impl;
 
-import com.bill.parking_control.dtos.ParkingSessionResponseDTO;
-import com.bill.parking_control.dtos.ParkingSessionStartDTO;
+import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
+import com.bill.parking_control.dtos.session.ParkingSessionStartDTO;
 import com.bill.parking_control.persitenses.entities.ParkingSession;
 import com.bill.parking_control.persitenses.entities.ParkingSpot;
 import com.bill.parking_control.persitenses.entities.Tariff;

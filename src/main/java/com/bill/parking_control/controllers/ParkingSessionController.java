@@ -1,7 +1,7 @@
 package com.bill.parking_control.controllers;
 
-import com.bill.parking_control.dtos.ParkingSessionResponseDTO;
-import com.bill.parking_control.dtos.ParkingSessionStartDTO;
+import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
+import com.bill.parking_control.dtos.session.ParkingSessionStartDTO;
 import com.bill.parking_control.persitenses.entities.User;
 import com.bill.parking_control.services.ParkingSessionService;
 import jakarta.validation.Valid;

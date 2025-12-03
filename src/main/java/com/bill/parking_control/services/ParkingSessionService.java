@@ -1,7 +1,7 @@
 package com.bill.parking_control.services;
 
-import com.bill.parking_control.dtos.ParkingSessionResponseDTO;
-import com.bill.parking_control.dtos.ParkingSessionStartDTO;
+import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
+import com.bill.parking_control.dtos.session.ParkingSessionStartDTO;
 import com.bill.parking_control.persitenses.entities.User;
 
 import java.util.List;

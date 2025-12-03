@@ -1,7 +1,7 @@
 package com.bill.parking_control.controllers;
 
-import com.bill.parking_control.dtos.UserCreateDTO;
-import com.bill.parking_control.dtos.UserResponseDTO;
+import com.bill.parking_control.dtos.user.UserCreateDTO;
+import com.bill.parking_control.dtos.user.UserResponseDTO;
 import com.bill.parking_control.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

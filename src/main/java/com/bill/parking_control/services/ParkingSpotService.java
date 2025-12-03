@@ -1,7 +1,7 @@
 package com.bill.parking_control.services;
 
-import com.bill.parking_control.dtos.ParkingSpotCreateDTO;
-import com.bill.parking_control.dtos.ParkingSpotResponseDTO;
+import com.bill.parking_control.dtos.spot.ParkingSpotCreateDTO;
+import com.bill.parking_control.dtos.spot.ParkingSpotResponseDTO;
 import com.bill.parking_control.persitenses.entities.ParkingSpot;
 
 import java.util.List;
