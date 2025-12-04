@@ -3,7 +3,9 @@ package com.bill.parking_control.persitenses.entities;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -31,11 +33,14 @@ public class Reservation {
     private LocalDateTime reservedFrom;
     private LocalDateTime reservedUntil;
 
-    private ReservationStatus status; // ACTIVE, CANCELLED, COMPLETED
+    @Builder.Default
+    private ReservationStatus status = ReservationStatus.ACTIVE; // ACTIVE, CANCELLED, COMPLETED
 
     @Builder.Default
+    @CreatedDate
     private Instant createdAt = Instant.now();
     @Builder.Default
+    @LastModifiedDate
     private Instant lastModifiedAt = Instant.now();
 
     public enum ReservationStatus {
