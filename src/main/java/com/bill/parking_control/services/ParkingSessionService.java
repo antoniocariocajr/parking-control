@@ -2,16 +2,19 @@ package com.bill.parking_control.services;
 
 import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
 import com.bill.parking_control.dtos.session.ParkingSessionStartDTO;
-import com.bill.parking_control.persitenses.entities.User;
+import com.bill.parking_control.dtos.session.ParkingSessionUpdateDto;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ParkingSessionService {
-    ParkingSessionResponseDTO startSession(ParkingSessionStartDTO dto, User operator);
+    ParkingSessionResponseDTO startSession(ParkingSessionStartDTO dto);
 
-    ParkingSessionResponseDTO endSession(String sessionId, User operator);
+    ParkingSessionResponseDTO updateSession(String sessionId, ParkingSessionUpdateDto dto);
 
-    List<ParkingSessionResponseDTO> getAllSessions();
+    ParkingSessionResponseDTO endSession(String sessionId);
 
-    List<ParkingSessionResponseDTO> getActiveSessions();
+    Page<ParkingSessionResponseDTO> getAllSessions(Pageable pageable);
+
+    Page<ParkingSessionResponseDTO> getActiveSessions(Pageable pageable);
 }

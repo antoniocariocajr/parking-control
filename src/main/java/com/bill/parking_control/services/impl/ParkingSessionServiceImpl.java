@@ -2,6 +2,7 @@ package com.bill.parking_control.services.impl;
 
 import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
 import com.bill.parking_control.dtos.session.ParkingSessionStartDTO;
+import com.bill.parking_control.dtos.session.ParkingSessionUpdateDto;
 import com.bill.parking_control.persitenses.entities.ParkingSession;
 import com.bill.parking_control.persitenses.entities.ParkingSpot;
 import com.bill.parking_control.persitenses.entities.Tariff;
@@ -9,84 +10,111 @@ import com.bill.parking_control.persitenses.entities.User;
 import com.bill.parking_control.persitenses.entities.Vehicle;
 import com.bill.parking_control.persitenses.repositories.ParkingSessionRepository;
 import com.bill.parking_control.persitenses.repositories.ParkingSpotRepository;
+import com.bill.parking_control.persitenses.repositories.TariffRepository;
+import com.bill.parking_control.persitenses.repositories.UserRepository;
+import com.bill.parking_control.persitenses.repositories.VehicleRepository;
 import com.bill.parking_control.services.ParkingSessionService;
-import com.bill.parking_control.services.ParkingSpotService;
-import com.bill.parking_control.services.TariffService;
-import com.bill.parking_control.services.VehicleService;
+import com.bill.parking_control.services.mappers.ParkingSessionMapper;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ParkingSessionServiceImpl implements ParkingSessionService {
 
     private final ParkingSessionRepository parkingSessionRepository;
-    private final VehicleService vehicleService;
-    private final ParkingSpotService parkingSpotService;
-    private final ParkingSpotRepository parkingSpotRepository; // Need repo to save status update
-    private final TariffService tariffService;
+    private final UserRepository userRepository;
+    private final VehicleRepository vehicleRepository;
+    private final ParkingSpotRepository parkingSpotRepository;
+    private final TariffRepository tariffRepository;
+    private final ParkingSessionMapper parkingSessionMapper;
 
     @Override
     @Transactional
-    public ParkingSessionResponseDTO startSession(ParkingSessionStartDTO dto, User operator) {
-        Vehicle vehicle = vehicleService.getEntityByLicensePlate(dto.vehicleLicensePlate());
-
+    public ParkingSessionResponseDTO startSession(ParkingSessionStartDTO dto) {
+        Vehicle vehicle = vehicleRepository.findByLicensePlate(dto.vehicleLicensePlate())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
+        User operator = userRepository.findById(dto.operatorId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Operator not found"));
         ParkingSpot spot;
         if (dto.spotCode() != null && !dto.spotCode().isBlank()) {
-            spot = parkingSpotService.getEntityByCode(dto.spotCode());
+            spot = parkingSpotRepository.findByCode(dto.spotCode())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Spot not found"));
             if (spot.getStatus() != ParkingSpot.SpotStatus.FREE) {
-                throw new IllegalStateException("Spot is not free");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Spot is not free");
+            }
+            if (spot.getType() != vehicle.getType()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Spot type does not match vehicle type");
             }
         } else {
             // Find first free spot matching vehicle type (simplified)
             // Ideally we should filter by type, but for now just find any free spot
-            spot = parkingSpotRepository.findByStatus(ParkingSpot.SpotStatus.FREE).stream()
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalStateException("No free spots available"));
+            spot = parkingSpotRepository.findFirstFreeByType(vehicle.getType())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "No free spots available"));
         }
 
         // Update spot status
         spot.setStatus(ParkingSpot.SpotStatus.OCCUPIED);
-        parkingSpotRepository.save(spot);
 
-        ParkingSession session = ParkingSession.builder()
-                .vehicle(vehicle)
-                .spot(spot)
-                .entryTime(LocalDateTime.now())
-                .status(ParkingSession.SessionStatus.ACTIVE)
-                .operator(operator)
-                .build();
-
+        ParkingSession session = parkingSessionMapper.toEntity(vehicle, spot, operator, dto.entryTime());
         session = parkingSessionRepository.save(session);
-        return mapToDTO(session);
+        return parkingSessionMapper.toResponseDTO(session);
     }
 
     @Override
     @Transactional
-    public ParkingSessionResponseDTO endSession(String sessionId, User operator) {
+    public ParkingSessionResponseDTO updateSession(String sessionId, ParkingSessionUpdateDto dto) {
         ParkingSession session = parkingSessionRepository.findById(sessionId)
-                .orElseThrow(() -> new RuntimeException("Session not found"));
-
-        if (session.getStatus() != ParkingSession.SessionStatus.ACTIVE) {
-            throw new IllegalStateException("Session is not active");
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
+        Vehicle vehicle = null;
+        if (dto.vehicleLicensePlate() != null && !dto.vehicleLicensePlate().isBlank()) {
+            vehicle = vehicleRepository.findByLicensePlate(dto.vehicleLicensePlate())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
         }
+        ParkingSpot spot = null;
+        if (dto.spotCode() != null && !dto.spotCode().isBlank()) {
+            spot = parkingSpotRepository.findByCode(dto.spotCode())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Spot not found"));
+        }
+        User operator = null;
+        if (dto.operatorId() != null && !dto.operatorId().isBlank()) {
+            operator = userRepository.findById(dto.operatorId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Operator not found"));
+        }
+        parkingSessionMapper.updateEntity(session, vehicle, spot, operator, dto);
+        session = parkingSessionRepository.save(session);
+        return parkingSessionMapper.toResponseDTO(session);
+    }
 
-        LocalDateTime exitTime = LocalDateTime.now();
-        session.setExitTime(exitTime);
+    @Override
+    @Transactional
+    public ParkingSessionResponseDTO endSession(String sessionId) {
+        ParkingSession session = parkingSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
+        if (session.getStatus() != ParkingSession.SessionStatus.ACTIVE) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session is not active");
+        }
+        session.setExitTime(LocalDateTime.now());
         session.setStatus(ParkingSession.SessionStatus.FINISHED);
 
         // Calculate amount
-        Tariff tariff = tariffService.getTariffByVehicleType(session.getVehicle().getType());
+        Tariff tariff = tariffRepository.findByVehicleType(session.getVehicle().getType())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tariff not found"));
         session.setHourlyRate(tariff.getHourlyRate());
 
-        long hours = Duration.between(session.getEntryTime(), exitTime).toHours();
+        long hours = Duration.between(session.getEntryTime(), session.getExitTime()).toHours();
         if (hours == 0)
             hours = 1; // Minimum 1 hour
 
@@ -99,32 +127,18 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
         parkingSpotRepository.save(spot);
 
         session = parkingSessionRepository.save(session);
-        return mapToDTO(session);
+        return parkingSessionMapper.toResponseDTO(session);
     }
 
     @Override
-    public List<ParkingSessionResponseDTO> getAllSessions() {
-        return parkingSessionRepository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<ParkingSessionResponseDTO> getAllSessions(Pageable pageable) {
+        return parkingSessionRepository.findAll(pageable).map(parkingSessionMapper::toResponseDTO);
     }
 
     @Override
-    public List<ParkingSessionResponseDTO> getActiveSessions() {
-        return parkingSessionRepository.findByStatus(ParkingSession.SessionStatus.ACTIVE).stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<ParkingSessionResponseDTO> getActiveSessions(Pageable pageable) {
+        List<ParkingSession> sessions = parkingSessionRepository.findByStatus(ParkingSession.SessionStatus.ACTIVE);
+        return parkingSessionMapper.toResponseDTO(sessions, pageable);
     }
 
-    private ParkingSessionResponseDTO mapToDTO(ParkingSession session) {
-        return new ParkingSessionResponseDTO(
-                session.getId(),
-                session.getVehicle().getLicensePlate(),
-                session.getSpot().getCode(),
-                session.getEntryTime(),
-                session.getExitTime(),
-                session.getStatus(),
-                session.getHourlyRate(),
-                session.getTotalAmount());
-    }
 }

@@ -1,11 +1,12 @@
 package com.bill.parking_control.dtos.spot;
 
-import com.bill.parking_control.persitenses.entities.ParkingSpot.SpotType;
+import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ParkingSpotCreateDTO(
-                @NotBlank String code,
-                @NotNull SpotType type,
-                boolean covered) {
+        @NotBlank String code,
+        @NotNull VehicleType type,
+        boolean covered) {
 }

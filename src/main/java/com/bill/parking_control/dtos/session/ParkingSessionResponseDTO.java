@@ -5,12 +5,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record ParkingSessionResponseDTO(
-                String id,
-                String vehicleLicensePlate,
-                String spotCode,
-                LocalDateTime entryTime,
-                LocalDateTime exitTime,
-                SessionStatus status,
-                BigDecimal hourlyRate,
-                BigDecimal totalAmount) {
+        String id,
+        String vehicleLicensePlate,
+        String spotCode,
+        String operatorId,
+        LocalDateTime entryTime,
+        LocalDateTime exitTime,
+        SessionStatus status,
+        BigDecimal hourlyRate,
+        BigDecimal totalAmount) {
 }

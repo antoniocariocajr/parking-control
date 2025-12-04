@@ -1,7 +1,10 @@
 package com.bill.parking_control.persitenses.repositories;
 
 import com.bill.parking_control.persitenses.entities.ParkingSpot;
+import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,4 +15,7 @@ public interface ParkingSpotRepository extends MongoRepository<ParkingSpot, Stri
     Optional<ParkingSpot> findByCode(String code);
 
     List<ParkingSpot> findByStatus(ParkingSpot.SpotStatus status);
+
+    @Query("{ 'status': 'FREE', 'type': ?0 }")
+    Optional<ParkingSpot> findFirstFreeByType(VehicleType type);
 }

@@ -3,12 +3,14 @@ package com.bill.parking_control.services.impl;
 import com.bill.parking_control.dtos.spot.ParkingSpotCreateDTO;
 import com.bill.parking_control.dtos.spot.ParkingSpotResponseDTO;
 import com.bill.parking_control.persitenses.entities.ParkingSpot;
+import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
 import com.bill.parking_control.persitenses.repositories.ParkingSpotRepository;
 import com.bill.parking_control.services.ParkingSpotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +58,11 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
     public ParkingSpot getEntityByCode(String code) {
         return parkingSpotRepository.findByCode(code)
                 .orElseThrow(() -> new RuntimeException("Spot not found"));
+    }
+
+    @Override
+    public Optional<ParkingSpot> findFirstFreeByType(VehicleType type) {
+        return parkingSpotRepository.findFirstFreeByType(type);
     }
 
     private ParkingSpotResponseDTO mapToDTO(ParkingSpot spot) {

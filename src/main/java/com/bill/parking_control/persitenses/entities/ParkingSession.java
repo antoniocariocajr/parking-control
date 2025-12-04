@@ -32,7 +32,8 @@ public class ParkingSession {
     private LocalDateTime entryTime;
     private LocalDateTime exitTime;
 
-    private SessionStatus status; // ACTIVE, FINISHED, CANCELLED
+    @Builder.Default
+    private SessionStatus status = SessionStatus.ACTIVE; // ACTIVE, FINISHED, CANCELLED
 
     @DBRef
     private User operator; // quem liberou entrada

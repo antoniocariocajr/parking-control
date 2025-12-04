@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +28,7 @@ public class ParkingSpot {
     @NotBlank
     @Indexed(unique = true)
     private String code; // A01, B13…
-    private SpotType type; // CAR, MOTORCYCLE, TRUCK
+    private VehicleType type; // CAR, MOTORCYCLE, TRUCK
     private SpotStatus status; // FREE, OCCUPIED, RESERVED, BLOCKED
 
     private boolean covered; // coberta ou não
@@ -35,10 +37,6 @@ public class ParkingSpot {
     private Instant createdAt = Instant.now();
     @Builder.Default
     private Instant lastModifiedAt = Instant.now();
-
-    public enum SpotType {
-        CAR, MOTORCYCLE, TRUCK
-    }
 
     public enum SpotStatus {
         FREE, OCCUPIED, RESERVED, BLOCKED
