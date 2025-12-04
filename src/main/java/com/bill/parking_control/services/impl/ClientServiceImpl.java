@@ -2,31 +2,36 @@ package com.bill.parking_control.services.impl;
 
 import com.bill.parking_control.dtos.client.ClientCreateDTO;
 import com.bill.parking_control.dtos.client.ClientResponseDTO;
-import com.bill.parking_control.dtos.vehicle.VehicleResponseDTO;
+import com.bill.parking_control.dtos.client.ClientUpdateDto;
 import com.bill.parking_control.persitenses.entities.Client;
-import com.bill.parking_control.persitenses.entities.Vehicle;
 import com.bill.parking_control.persitenses.repositories.ClientRepository;
 import com.bill.parking_control.services.ClientService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.bill.parking_control.services.mappers.ClientMapper;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final ClientMapper clientMapper;
 
     @Override
+    @Transactional
     public ClientResponseDTO createClient(ClientCreateDTO dto) {
         if (clientRepository.findByCpf(dto.cpf()).isPresent()) {
-            throw new IllegalArgumentException("CPF already in use");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF already in use");
         }
         if (clientRepository.findByEmail(dto.email()).isPresent()) {
-            throw new IllegalArgumentException("Email already in use");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already in use");
         }
 
         Client client = Client.builder()
@@ -37,49 +42,46 @@ public class ClientServiceImpl implements ClientService {
                 .build();
 
         client = clientRepository.save(client);
-        return mapToDTO(client);
+        return clientMapper.toClientResponseDTO(client);
     }
 
     @Override
-    public List<ClientResponseDTO> getAllClients() {
-        return clientRepository.findAll().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<ClientResponseDTO> getAllClients(Pageable pageable) {
+        return clientRepository.findAll(pageable).map(clientMapper::toClientResponseDTO);
     }
 
     @Override
     public ClientResponseDTO getClientById(String id) {
-        return mapToDTO(getEntityById(id));
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        return clientMapper.toClientResponseDTO(client);
     }
 
     @Override
-    public Client getEntityById(String id) {
-        return clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Client not found"));
+    @Transactional
+    public ClientResponseDTO updateClient(String id, ClientUpdateDto dto) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        clientMapper.updateClient(client, dto);
+        client = clientRepository.save(client);
+        return clientMapper.toClientResponseDTO(client);
     }
 
-    private ClientResponseDTO mapToDTO(Client client) {
-        List<VehicleResponseDTO> vehicleDTOs = client.getVehicles() != null
-                ? client.getVehicles().stream().map(this::mapVehicleToDTO).collect(Collectors.toList())
-                : Collections.emptyList();
-
-        return new ClientResponseDTO(
-                client.getId(),
-                client.getName(),
-                client.getCpf(),
-                client.getEmail(),
-                client.getPhone(),
-                vehicleDTOs);
+    @Override
+    @Transactional
+    public void updateClientActiveStatus(String id, boolean isActive) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        client.setActive(isActive);
+        clientRepository.save(client);
     }
 
-    private VehicleResponseDTO mapVehicleToDTO(Vehicle vehicle) {
-        return new VehicleResponseDTO(
-                vehicle.getId(),
-                vehicle.getLicensePlate(),
-                vehicle.getBrand(),
-                vehicle.getModel(),
-                vehicle.getColor(),
-                vehicle.getType(),
-                vehicle.getOwner() != null ? vehicle.getOwner().getId() : null);
+    @Override
+    @Transactional
+    public void deleteClient(String id) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        clientRepository.delete(client);
     }
+
 }

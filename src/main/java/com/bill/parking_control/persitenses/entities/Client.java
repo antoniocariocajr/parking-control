@@ -45,6 +45,9 @@ public class Client {
     private List<Vehicle> vehicles = new ArrayList<>();
 
     @Builder.Default
+    private boolean isActive = true;
+
+    @Builder.Default
     @CreatedDate
     private Instant createdAt = Instant.now();
     @Builder.Default
