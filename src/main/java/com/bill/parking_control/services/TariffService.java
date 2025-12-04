@@ -2,15 +2,22 @@ package com.bill.parking_control.services;
 
 import com.bill.parking_control.dtos.tariff.TariffCreateDTO;
 import com.bill.parking_control.dtos.tariff.TariffResponseDTO;
-import com.bill.parking_control.persitenses.entities.Tariff;
+import com.bill.parking_control.dtos.tariff.TariffUpdateDto;
 import com.bill.parking_control.persitenses.entities.Vehicle;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TariffService {
     TariffResponseDTO createTariff(TariffCreateDTO dto);
 
-    List<TariffResponseDTO> getAllTariffs();
+    Page<TariffResponseDTO> getAllTariffs(Pageable pageable);
 
-    Tariff getTariffByVehicleType(Vehicle.VehicleType type);
+    TariffResponseDTO getTariffById(String id);
+
+    TariffResponseDTO getTariffByVehicleType(Vehicle.VehicleType type);
+
+    TariffResponseDTO updateTariff(String id, TariffUpdateDto dto);
+
+    void deleteTariff(String id);
 }

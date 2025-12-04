@@ -1,11 +1,11 @@
 package com.bill.parking_control.dtos.tariff;
 
-import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record TariffResponseDTO(
-        String id,
+import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+
+public record TariffUpdateDto(
         VehicleType vehicleType,
         BigDecimal hourlyRate,
         BigDecimal dailyRate,
@@ -13,4 +13,5 @@ public record TariffResponseDTO(
         LocalDateTime validFrom,
         LocalDateTime validUntil,
         boolean active) {
+
 }

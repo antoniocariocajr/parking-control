@@ -3,7 +3,9 @@ package com.bill.parking_control.persitenses.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -30,4 +32,14 @@ public class Tariff {
 
     private LocalDateTime validFrom;
     private LocalDateTime validUntil;
+
+    @Builder.Default
+    private boolean active = true;
+
+    @Builder.Default
+    @CreatedDate
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 }
