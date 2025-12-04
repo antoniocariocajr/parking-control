@@ -16,11 +16,12 @@ import java.util.Optional;
 public interface PaymentRepository extends MongoRepository<Payment, String> {
     Optional<Payment> findBySessionId(String sessionId);
 
-    @Query("{ 'status' : 'PAID', 'paidAt' : {  : ?0,  : ?1 } }")
+    @Query("{ 'status' : 'PAID', 'paidAt' : { $gte : ?0, $lt : ?1 } }")
     Page<Payment> findPaidBetween(Instant startOfDay, Instant endOfDay, Pageable pageable);
 
     @Query("{ 'status' : 'PAID' }")
     Page<Payment> findAllPaid(Pageable pageable);
 
-    Page<Payment> findByPaymentStatus(Pageable pageable, PaymentStatus status);
+    @Query("{ 'status' : ?0 }")
+    Page<Payment> findByPaymentStatus(PaymentStatus status, Pageable pageable);
 }

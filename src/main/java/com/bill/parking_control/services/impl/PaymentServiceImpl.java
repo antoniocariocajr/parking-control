@@ -39,7 +39,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Page<PaymentResponseDTO> findByPaymentStatus(Pageable pageable, PaymentStatus status) {
-        return paymentRepository.findByPaymentStatus(pageable, status).map(paymentMapper::toDTO);
+        return paymentRepository.findByPaymentStatus(status, pageable).map(paymentMapper::toDTO);
     }
 
     @Override
