@@ -68,6 +68,87 @@ O projeto segue uma arquitetura em camadas limpa e organizada:
 
 ---
 
+## 🗄️ Database Model
+
+Abaixo está o diagrama Entidade-Relacionamento (ER) do sistema:
+
+```mermaid
+erDiagram
+    User {
+        String id PK
+        String email
+        String name
+        String password
+        Role role
+        boolean enabled
+    }
+    Client {
+        String id PK
+        String name
+        String cpf
+        String email
+        String phone
+    }
+    Vehicle {
+        String id PK
+        String licensePlate
+        String brand
+        String model
+        String color
+        VehicleType type
+    }
+    ParkingSpot {
+        String id PK
+        String code
+        VehicleType type
+        SpotStatus status
+        boolean covered
+    }
+    Tariff {
+        String id PK
+        VehicleType vehicleType
+        BigDecimal hourlyRate
+        BigDecimal dailyRate
+        BigDecimal monthlyRate
+        Instant validFrom
+        Instant validUntil
+        boolean active
+    }
+    ParkingSession {
+        String id PK
+        Instant entryTime
+        Instant exitTime
+        SessionStatus status
+        BigDecimal hourlyRate
+        BigDecimal totalAmount
+    }
+    Payment {
+        String id PK
+        BigDecimal amount
+        PaymentMethod method
+        PaymentStatus status
+        Instant paidAt
+        String transactionId
+    }
+    Reservation {
+        String id PK
+        Instant reservedFrom
+        Instant reservedUntil
+        ReservationStatus status
+    }
+
+    Client ||--|{ Vehicle : owns
+    Vehicle }|--|| Client : owned_by
+    ParkingSession }|--|| Vehicle : involves
+    ParkingSession }|--|| ParkingSpot : uses
+    ParkingSession }|--|| User : managed_by
+    Payment }|--|| ParkingSession : pays_for
+    Reservation }|--|| Client : made_by
+    Reservation }|--|| ParkingSpot : reserves
+```
+
+---
+
 ## 🏁 Getting Started
 
 Siga os passos abaixo para rodar o projeto em sua máquina local.
