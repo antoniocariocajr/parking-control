@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -43,8 +43,8 @@ class ReservationServiceTest {
 
     @Test
     void create_Success() {
-        ReservationCreateDTO dto = new ReservationCreateDTO("client-id", "spot-id", LocalDateTime.now(),
-                LocalDateTime.now().plusHours(1));
+        ReservationCreateDTO dto = new ReservationCreateDTO("client-id", "spot-id", Instant.now(),
+                Instant.now().plusSeconds(3600));
         Client client = Client.builder().id("client-id").build();
         ParkingSpot spot = ParkingSpot.builder().id("spot-id").status(ParkingSpot.SpotStatus.FREE).build();
         Reservation reservation = Reservation.builder().build();
@@ -68,8 +68,8 @@ class ReservationServiceTest {
 
     @Test
     void create_SpotNotFree() {
-        ReservationCreateDTO dto = new ReservationCreateDTO("client-id", "spot-id", LocalDateTime.now(),
-                LocalDateTime.now().plusHours(1));
+        ReservationCreateDTO dto = new ReservationCreateDTO("client-id", "spot-id", Instant.now(),
+                Instant.now().plusSeconds(3600));
         Client client = Client.builder().id("client-id").build();
         ParkingSpot spot = ParkingSpot.builder().id("spot-id").status(ParkingSpot.SpotStatus.OCCUPIED).build();
 

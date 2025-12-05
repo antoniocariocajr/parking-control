@@ -1,7 +1,6 @@
 package com.bill.parking_control.persistences.entities;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -30,8 +29,8 @@ public class Reservation {
     @DBRef
     private ParkingSpot spot;
 
-    private LocalDateTime reservedFrom;
-    private LocalDateTime reservedUntil;
+    private Instant reservedFrom;
+    private Instant reservedUntil;
 
     @Builder.Default
     private ReservationStatus status = ReservationStatus.ACTIVE; // ACTIVE, CANCELLED, COMPLETED

@@ -1,6 +1,6 @@
 package com.bill.parking_control.services.mappers;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -34,9 +34,9 @@ public class ParkingSessionMapper {
             Vehicle vehicle,
             ParkingSpot parkingSpot,
             User operator,
-            LocalDateTime entryTime) {
+            Instant entryTime) {
 
-        entryTime = entryTime != null ? entryTime : LocalDateTime.now();
+        entryTime = entryTime != null ? entryTime : Instant.now();
         return ParkingSession.builder()
                 .vehicle(vehicle)
                 .spot(parkingSpot)

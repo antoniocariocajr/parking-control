@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -30,6 +30,7 @@ import com.bill.parking_control.persistences.repositories.ParkingSpotRepository;
 import com.bill.parking_control.persistences.repositories.PaymentRepository;
 import com.bill.parking_control.persistences.repositories.TariffRepository;
 import com.bill.parking_control.services.mappers.PaymentMapper;
+import com.bill.parking_control.services.strategy.TariffCalculatorStrategy;
 
 @ExtendWith(MockitoExtension.class)
 class CheckoutServiceTest {
@@ -44,6 +45,8 @@ class CheckoutServiceTest {
     private ParkingSpotRepository parkingSpotRepository;
     @Mock
     private PaymentMapper paymentMapper;
+    @Mock
+    private TariffCalculatorStrategy tariffCalculatorStrategy;
 
     @InjectMocks
     private CheckoutServiceImpl checkoutService;
@@ -58,7 +61,7 @@ class CheckoutServiceTest {
                 .id(sessionId)
                 .vehicle(vehicle)
                 .spot(spot)
-                .entryTime(LocalDateTime.now().minusHours(1))
+                .entryTime(Instant.now().minusSeconds(3600))
                 .status(ParkingSession.SessionStatus.ACTIVE)
                 .build();
         Tariff tariff = Tariff.builder().hourlyRate(BigDecimal.TEN).build();
@@ -68,6 +71,7 @@ class CheckoutServiceTest {
 
         when(sessionRepository.findById(sessionId)).thenReturn(Optional.of(session));
         when(tariffRepository.findActiveByVehicleTypeAndDate(any(), any())).thenReturn(Optional.of(tariff));
+        when(tariffCalculatorStrategy.calculate(any(), any(), any())).thenReturn(BigDecimal.TEN);
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
         when(paymentMapper.toDTO(payment)).thenReturn(responseDTO);
 
@@ -77,6 +81,7 @@ class CheckoutServiceTest {
         verify(sessionRepository).save(session);
         verify(parkingSpotRepository).save(spot);
         verify(paymentRepository).save(any(Payment.class));
+        verify(tariffCalculatorStrategy).calculate(any(), any(), any());
     }
 
     @Test

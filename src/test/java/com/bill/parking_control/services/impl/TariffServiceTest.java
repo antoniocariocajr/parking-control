@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -37,11 +37,11 @@ class TariffServiceTest {
     @Test
     void createTariff_Success() {
         TariffCreateDTO dto = new TariffCreateDTO(VehicleType.CAR, BigDecimal.TEN, BigDecimal.valueOf(100),
-                BigDecimal.valueOf(2000), LocalDateTime.now(), LocalDateTime.now().plusDays(30));
+                BigDecimal.valueOf(2000), Instant.now(), Instant.now().plusSeconds(30 * 24 * 3600));
         Tariff tariff = Tariff.builder().vehicleType(VehicleType.CAR).build();
         TariffResponseDTO responseDTO = new TariffResponseDTO("tariff-id", VehicleType.CAR, BigDecimal.TEN,
-                BigDecimal.valueOf(100), BigDecimal.valueOf(2000), LocalDateTime.now(),
-                LocalDateTime.now().plusDays(30), true);
+                BigDecimal.valueOf(100), BigDecimal.valueOf(2000), Instant.now(),
+                Instant.now().plusSeconds(30 * 24 * 3600), true);
 
         when(tariffRepository.findByVehicleType(VehicleType.CAR)).thenReturn(Optional.empty());
         when(tariffMapper.mapToEntity(dto)).thenReturn(tariff);
@@ -57,7 +57,7 @@ class TariffServiceTest {
     @Test
     void createTariff_AlreadyExists() {
         TariffCreateDTO dto = new TariffCreateDTO(VehicleType.CAR, BigDecimal.TEN, BigDecimal.valueOf(100),
-                BigDecimal.valueOf(2000), LocalDateTime.now(), LocalDateTime.now().plusDays(30));
+                BigDecimal.valueOf(2000), Instant.now(), Instant.now().plusSeconds(30 * 24 * 3600));
 
         when(tariffRepository.findByVehicleType(VehicleType.CAR)).thenReturn(Optional.of(new Tariff()));
 

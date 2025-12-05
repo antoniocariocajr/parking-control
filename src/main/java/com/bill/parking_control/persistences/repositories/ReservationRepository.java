@@ -9,15 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Repository
 public interface ReservationRepository extends MongoRepository<Reservation, String> {
     Page<Reservation> findByClientId(String clientId, Pageable pageable);
 
     boolean existsBySpotAndReservedFromBetween(ParkingSpot spot,
-            LocalDateTime reservedFrom,
-            LocalDateTime reservedUntil);
+            Instant reservedFrom,
+            Instant reservedUntil);
 
     boolean existsActiveReservationByClientId(String id);
 
@@ -25,5 +25,5 @@ public interface ReservationRepository extends MongoRepository<Reservation, Stri
 
     Page<Reservation> findByStatus(ReservationStatus status, Pageable pageable);
 
-    Page<Reservation> findByReservedFromBetween(LocalDateTime from, LocalDateTime to, Pageable pageable);
+    Page<Reservation> findByReservedFromBetween(Instant from, Instant to, Pageable pageable);
 }

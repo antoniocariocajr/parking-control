@@ -1,7 +1,7 @@
 package com.bill.parking_control.persistences.entities;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -30,16 +30,16 @@ public class Tariff {
     private BigDecimal dailyRate;
     private BigDecimal monthlyRate;
 
-    private LocalDateTime validFrom;
-    private LocalDateTime validUntil;
+    private Instant validFrom;
+    private Instant validUntil;
 
     @Builder.Default
     private boolean active = true;
 
     @Builder.Default
     @CreatedDate
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private Instant createdAt = Instant.now();
 
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 }

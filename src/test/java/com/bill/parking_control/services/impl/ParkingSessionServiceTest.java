@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -48,7 +48,7 @@ class ParkingSessionServiceTest {
 
     @Test
     void startSession_Success() {
-        ParkingSessionStartDTO dto = new ParkingSessionStartDTO("ABC-1234", "A01", "user-id", LocalDateTime.now());
+        ParkingSessionStartDTO dto = new ParkingSessionStartDTO("ABC-1234", "A01", "user-id", Instant.now());
 
         Vehicle vehicle = Vehicle.builder().licensePlate("ABC-1234").type(VehicleType.CAR).build();
         User operator = User.builder().id("user-id").build();
@@ -56,7 +56,7 @@ class ParkingSessionServiceTest {
                 .build();
         ParkingSession session = ParkingSession.builder().build();
         ParkingSessionResponseDTO responseDTO = new ParkingSessionResponseDTO("session-id", "ABC-1234", "A01",
-                "user-id", LocalDateTime.now(), null, ParkingSession.SessionStatus.ACTIVE, null, null);
+                "user-id", Instant.now(), null, ParkingSession.SessionStatus.ACTIVE, null, null);
 
         when(vehicleRepository.findByLicensePlate("ABC-1234")).thenReturn(Optional.of(vehicle));
         when(userRepository.findById("user-id")).thenReturn(Optional.of(operator));
@@ -74,7 +74,7 @@ class ParkingSessionServiceTest {
 
     @Test
     void startSession_VehicleNotFound() {
-        ParkingSessionStartDTO dto = new ParkingSessionStartDTO("ABC-1234", "A01", "user-id", LocalDateTime.now());
+        ParkingSessionStartDTO dto = new ParkingSessionStartDTO("ABC-1234", "A01", "user-id", Instant.now());
 
         when(vehicleRepository.findByLicensePlate("ABC-1234")).thenReturn(Optional.empty());
 

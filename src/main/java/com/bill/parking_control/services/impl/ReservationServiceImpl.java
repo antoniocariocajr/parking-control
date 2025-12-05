@@ -1,6 +1,6 @@
 package com.bill.parking_control.services.impl;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -86,8 +86,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Page<ReservationResponseDTO> findAllByReservedFromBetween(Pageable pageable, LocalDateTime from,
-            LocalDateTime to) {
+    public Page<ReservationResponseDTO> findAllByReservedFromBetween(Pageable pageable, Instant from,
+            Instant to) {
         return reservationRepository.findByReservedFromBetween(from, to, pageable)
                 .map(reservationMapper::toDTO);
     }

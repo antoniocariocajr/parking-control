@@ -1,6 +1,6 @@
 package com.bill.parking_control.controllers;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -127,7 +127,7 @@ public class ReservationController {
         @ResponseStatus(HttpStatus.OK)
         @PreAuthorize("hasAuthority('SCOPE_OPERATOR')")
         public Page<ReservationResponseDTO> findAllByReservedFromBetween(Pageable pageable,
-                        @PathVariable LocalDateTime from, @PathVariable LocalDateTime to) {
+                        @PathVariable Instant from, @PathVariable Instant to) {
                 return reservationService.findAllByReservedFromBetween(pageable, from, to);
         }
 

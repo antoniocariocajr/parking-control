@@ -1,6 +1,6 @@
 package com.bill.parking_control.services;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,7 @@ public interface ReservationService {
 
     Page<ReservationResponseDTO> findAllByStatus(Pageable pageable, ReservationStatus status);
 
-    Page<ReservationResponseDTO> findAllByReservedFromBetween(Pageable pageable, LocalDateTime from, LocalDateTime to);
+    Page<ReservationResponseDTO> findAllByReservedFromBetween(Pageable pageable, Instant from, Instant to);
 
     void cancelReservation(String id);
 }

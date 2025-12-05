@@ -2,7 +2,6 @@ package com.bill.parking_control.persistences.entities;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -29,8 +28,8 @@ public class ParkingSession {
     @DBRef
     private ParkingSpot spot; // vaga física
 
-    private LocalDateTime entryTime;
-    private LocalDateTime exitTime;
+    private Instant entryTime;
+    private Instant exitTime;
 
     @Builder.Default
     private SessionStatus status = SessionStatus.ACTIVE; // ACTIVE, FINISHED, CANCELLED
