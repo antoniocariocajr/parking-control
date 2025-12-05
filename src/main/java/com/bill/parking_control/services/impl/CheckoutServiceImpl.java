@@ -3,11 +3,13 @@ package com.bill.parking_control.services.impl;
 import com.bill.parking_control.dtos.payment.PaymentResponseDTO;
 import com.bill.parking_control.persitenses.entities.ParkingSession;
 import com.bill.parking_control.persitenses.entities.ParkingSession.SessionStatus;
+import com.bill.parking_control.persitenses.entities.ParkingSpot;
 import com.bill.parking_control.persitenses.entities.Payment;
 import com.bill.parking_control.persitenses.entities.Payment.PaymentMethod;
 import com.bill.parking_control.persitenses.entities.Payment.PaymentStatus;
 import com.bill.parking_control.persitenses.entities.Tariff;
 import com.bill.parking_control.persitenses.repositories.ParkingSessionRepository;
+import com.bill.parking_control.persitenses.repositories.ParkingSpotRepository;
 import com.bill.parking_control.persitenses.repositories.PaymentRepository;
 import com.bill.parking_control.persitenses.repositories.TariffRepository;
 import com.bill.parking_control.services.CheckoutService;
@@ -32,6 +34,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         private final ParkingSessionRepository sessionRepository;
         private final TariffRepository tariffRepository;
         private final PaymentRepository paymentRepository;
+        private final ParkingSpotRepository parkingSpotRepository;
         private final PaymentMapper paymentMapper;
 
         @Transactional
@@ -71,6 +74,10 @@ public class CheckoutServiceImpl implements CheckoutService {
                                 .method(paymentMethod)
                                 .status(PaymentStatus.PENDING)
                                 .build();
+                // Free the spot
+                ParkingSpot spot = session.getSpot();
+                spot.setStatus(ParkingSpot.SpotStatus.FREE);
+                parkingSpotRepository.save(spot);
 
                 return paymentMapper.toDTO(paymentRepository.save(payment));
         }

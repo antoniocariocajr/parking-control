@@ -4,13 +4,12 @@ import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
 import com.bill.parking_control.dtos.session.ParkingSessionStartDTO;
 import com.bill.parking_control.dtos.session.ParkingSessionUpdateDto;
 import com.bill.parking_control.persitenses.entities.ParkingSession;
+import com.bill.parking_control.persitenses.entities.ParkingSession.SessionStatus;
 import com.bill.parking_control.persitenses.entities.ParkingSpot;
-import com.bill.parking_control.persitenses.entities.Tariff;
 import com.bill.parking_control.persitenses.entities.User;
 import com.bill.parking_control.persitenses.entities.Vehicle;
 import com.bill.parking_control.persitenses.repositories.ParkingSessionRepository;
 import com.bill.parking_control.persitenses.repositories.ParkingSpotRepository;
-import com.bill.parking_control.persitenses.repositories.TariffRepository;
 import com.bill.parking_control.persitenses.repositories.UserRepository;
 import com.bill.parking_control.persitenses.repositories.VehicleRepository;
 import com.bill.parking_control.services.ParkingSessionService;
@@ -24,10 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.math.BigDecimal;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,7 +33,6 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     private final UserRepository userRepository;
     private final VehicleRepository vehicleRepository;
     private final ParkingSpotRepository parkingSpotRepository;
-    private final TariffRepository tariffRepository;
     private final ParkingSessionMapper parkingSessionMapper;
 
     @Override
@@ -100,33 +94,9 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
 
     @Override
     @Transactional
-    public ParkingSessionResponseDTO endSession(String sessionId) {
+    public ParkingSessionResponseDTO getSessionById(String sessionId) {
         ParkingSession session = parkingSessionRepository.findById(sessionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
-        if (session.getStatus() != ParkingSession.SessionStatus.ACTIVE) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session is not active");
-        }
-        session.setExitTime(LocalDateTime.now());
-        session.setStatus(ParkingSession.SessionStatus.FINISHED);
-
-        // Calculate amount
-        Tariff tariff = tariffRepository.findByVehicleType(session.getVehicle().getType())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tariff not found"));
-        session.setHourlyRate(tariff.getHourlyRate());
-
-        long hours = Duration.between(session.getEntryTime(), session.getExitTime()).toHours();
-        if (hours == 0)
-            hours = 1; // Minimum 1 hour
-
-        BigDecimal total = tariff.getHourlyRate().multiply(BigDecimal.valueOf(hours));
-        session.setTotalAmount(total);
-
-        // Free the spot
-        ParkingSpot spot = session.getSpot();
-        spot.setStatus(ParkingSpot.SpotStatus.FREE);
-        parkingSpotRepository.save(spot);
-
-        session = parkingSessionRepository.save(session);
         return parkingSessionMapper.toResponseDTO(session);
     }
 
@@ -136,9 +106,20 @@ public class ParkingSessionServiceImpl implements ParkingSessionService {
     }
 
     @Override
-    public Page<ParkingSessionResponseDTO> getActiveSessions(Pageable pageable) {
-        List<ParkingSession> sessions = parkingSessionRepository.findByStatus(ParkingSession.SessionStatus.ACTIVE);
+    public Page<ParkingSessionResponseDTO> getActiveSessions(Pageable pageable, SessionStatus status) {
+        List<ParkingSession> sessions = parkingSessionRepository.findByStatus(status);
         return parkingSessionMapper.toResponseDTO(sessions, pageable);
     }
 
+    @Override
+    public void cancelSession(String sessionId) {
+        ParkingSession session = parkingSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found"));
+        if (session.getStatus() == ParkingSession.SessionStatus.ACTIVE) {
+            session.setStatus(ParkingSession.SessionStatus.CANCELLED);
+            parkingSessionRepository.save(session);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session is not active");
+        }
+    }
 }

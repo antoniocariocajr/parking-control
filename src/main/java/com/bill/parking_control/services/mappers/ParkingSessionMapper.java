@@ -63,9 +63,6 @@ public class ParkingSessionMapper {
         if (parkingSessionUpdateDto.entryTime() != null) {
             parkingSession.setEntryTime(parkingSessionUpdateDto.entryTime());
         }
-        if (parkingSessionUpdateDto.status() != null) {
-            parkingSession.setStatus(parkingSessionUpdateDto.status());
-        }
     }
 
     public Page<ParkingSessionResponseDTO> toResponseDTO(List<ParkingSession> parkingSessions, Pageable pageable) {
