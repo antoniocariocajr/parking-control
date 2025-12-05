@@ -51,7 +51,7 @@ public class Vehicle {
     private Instant updatedAt = Instant.now();
 
     public enum VehicleType {
-
+        CAR, MOTORCYCLE, TRUCK
     }
 
 }
