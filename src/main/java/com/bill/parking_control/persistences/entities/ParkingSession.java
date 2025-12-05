@@ -1,4 +1,4 @@
-package com.bill.parking_control.persitenses.entities;
+package com.bill.parking_control.persistences.entities;
 
 import java.math.BigDecimal;
 import java.time.Instant;

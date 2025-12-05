@@ -10,12 +10,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.bill.parking_control.dtos.reservation.ReservationCreateDTO;
 import com.bill.parking_control.dtos.reservation.ReservationResponseDTO;
-import com.bill.parking_control.persitenses.entities.Client;
-import com.bill.parking_control.persitenses.entities.ParkingSpot;
-import com.bill.parking_control.persitenses.entities.Reservation;
-import com.bill.parking_control.persitenses.repositories.ClientRepository;
-import com.bill.parking_control.persitenses.repositories.ParkingSpotRepository;
-import com.bill.parking_control.persitenses.repositories.ReservationRepository;
+import com.bill.parking_control.persistences.entities.Client;
+import com.bill.parking_control.persistences.entities.ParkingSpot;
+import com.bill.parking_control.persistences.entities.Reservation;
+import com.bill.parking_control.persistences.repositories.ClientRepository;
+import com.bill.parking_control.persistences.repositories.ParkingSpotRepository;
+import com.bill.parking_control.persistences.repositories.ReservationRepository;
 import com.bill.parking_control.services.ReservationService;
 import com.bill.parking_control.services.mappers.ReservationMapper;
 

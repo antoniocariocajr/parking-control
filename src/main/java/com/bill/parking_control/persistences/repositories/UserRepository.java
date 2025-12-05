@@ -1,6 +1,6 @@
-package com.bill.parking_control.persitenses.repositories;
+package com.bill.parking_control.persistences.repositories;
 
-import com.bill.parking_control.persitenses.entities.User;
+import com.bill.parking_control.persistences.entities.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

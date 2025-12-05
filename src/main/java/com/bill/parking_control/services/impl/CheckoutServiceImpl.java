@@ -1,17 +1,17 @@
 package com.bill.parking_control.services.impl;
 
 import com.bill.parking_control.dtos.payment.PaymentResponseDTO;
-import com.bill.parking_control.persitenses.entities.ParkingSession;
-import com.bill.parking_control.persitenses.entities.ParkingSession.SessionStatus;
-import com.bill.parking_control.persitenses.entities.ParkingSpot;
-import com.bill.parking_control.persitenses.entities.Payment;
-import com.bill.parking_control.persitenses.entities.Payment.PaymentMethod;
-import com.bill.parking_control.persitenses.entities.Payment.PaymentStatus;
-import com.bill.parking_control.persitenses.entities.Tariff;
-import com.bill.parking_control.persitenses.repositories.ParkingSessionRepository;
-import com.bill.parking_control.persitenses.repositories.ParkingSpotRepository;
-import com.bill.parking_control.persitenses.repositories.PaymentRepository;
-import com.bill.parking_control.persitenses.repositories.TariffRepository;
+import com.bill.parking_control.persistences.entities.ParkingSession;
+import com.bill.parking_control.persistences.entities.ParkingSession.SessionStatus;
+import com.bill.parking_control.persistences.entities.ParkingSpot;
+import com.bill.parking_control.persistences.entities.Payment;
+import com.bill.parking_control.persistences.entities.Payment.PaymentMethod;
+import com.bill.parking_control.persistences.entities.Payment.PaymentStatus;
+import com.bill.parking_control.persistences.entities.Tariff;
+import com.bill.parking_control.persistences.repositories.ParkingSessionRepository;
+import com.bill.parking_control.persistences.repositories.ParkingSpotRepository;
+import com.bill.parking_control.persistences.repositories.PaymentRepository;
+import com.bill.parking_control.persistences.repositories.TariffRepository;
 import com.bill.parking_control.services.CheckoutService;
 import com.bill.parking_control.services.mappers.PaymentMapper;
 

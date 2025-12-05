@@ -3,7 +3,7 @@ package com.bill.parking_control.controllers;
 import com.bill.parking_control.dtos.user.UserCreateDTO;
 import com.bill.parking_control.dtos.user.UserResponseDTO;
 import com.bill.parking_control.dtos.user.UserUpdateDto;
-import com.bill.parking_control.persitenses.entities.User.Role;
+import com.bill.parking_control.persistences.entities.User.Role;
 import com.bill.parking_control.services.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;

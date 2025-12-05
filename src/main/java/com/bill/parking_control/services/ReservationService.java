@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.bill.parking_control.dtos.reservation.ReservationCreateDTO;
 import com.bill.parking_control.dtos.reservation.ReservationResponseDTO;
-import com.bill.parking_control.persitenses.entities.Reservation.ReservationStatus;
+import com.bill.parking_control.persistences.entities.Reservation.ReservationStatus;
 
 public interface ReservationService {
     ReservationResponseDTO create(ReservationCreateDTO dto);

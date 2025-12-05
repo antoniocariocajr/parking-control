@@ -2,7 +2,7 @@ package com.bill.parking_control.services;
 
 import com.bill.parking_control.dtos.Auth.LoginRequest;
 import com.bill.parking_control.dtos.Auth.LoginResponse;
-import com.bill.parking_control.persitenses.entities.User;
+import com.bill.parking_control.persistences.entities.User;
 
 public interface AuthenticationService {
 

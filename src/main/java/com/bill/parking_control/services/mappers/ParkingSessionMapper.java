@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 
 import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
 import com.bill.parking_control.dtos.session.ParkingSessionUpdateDto;
-import com.bill.parking_control.persitenses.entities.ParkingSession;
-import com.bill.parking_control.persitenses.entities.ParkingSpot;
-import com.bill.parking_control.persitenses.entities.User;
-import com.bill.parking_control.persitenses.entities.Vehicle;
+import com.bill.parking_control.persistences.entities.ParkingSession;
+import com.bill.parking_control.persistences.entities.ParkingSpot;
+import com.bill.parking_control.persistences.entities.User;
+import com.bill.parking_control.persistences.entities.Vehicle;
 
 @Component
 public class ParkingSessionMapper {

@@ -13,8 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.bill.parking_control.dtos.Auth.LoginRequest;
 import com.bill.parking_control.dtos.Auth.LoginResponse;
-import com.bill.parking_control.persitenses.entities.User;
-import com.bill.parking_control.persitenses.repositories.UserRepository;
+import com.bill.parking_control.persistences.entities.User;
+import com.bill.parking_control.persistences.repositories.UserRepository;
 import com.bill.parking_control.services.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;

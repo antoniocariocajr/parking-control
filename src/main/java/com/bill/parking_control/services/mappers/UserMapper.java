@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.bill.parking_control.dtos.user.UserCreateDTO;
 import com.bill.parking_control.dtos.user.UserResponseDTO;
-import com.bill.parking_control.persitenses.entities.User;
+import com.bill.parking_control.persistences.entities.User;
 
 @Component
 public class UserMapper {

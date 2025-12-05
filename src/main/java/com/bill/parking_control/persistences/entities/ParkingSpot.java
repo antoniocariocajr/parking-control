@@ -1,4 +1,4 @@
-package com.bill.parking_control.persitenses.entities;
+package com.bill.parking_control.persistences.entities;
 
 import java.time.Instant;
 
@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+import com.bill.parking_control.persistences.entities.Vehicle.VehicleType;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

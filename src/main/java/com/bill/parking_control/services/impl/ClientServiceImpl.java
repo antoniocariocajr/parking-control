@@ -3,8 +3,8 @@ package com.bill.parking_control.services.impl;
 import com.bill.parking_control.dtos.client.ClientCreateDTO;
 import com.bill.parking_control.dtos.client.ClientResponseDTO;
 import com.bill.parking_control.dtos.client.ClientUpdateDto;
-import com.bill.parking_control.persitenses.entities.Client;
-import com.bill.parking_control.persitenses.repositories.ClientRepository;
+import com.bill.parking_control.persistences.entities.Client;
+import com.bill.parking_control.persistences.repositories.ClientRepository;
 import com.bill.parking_control.services.ClientService;
 import com.bill.parking_control.services.mappers.ClientMapper;
 

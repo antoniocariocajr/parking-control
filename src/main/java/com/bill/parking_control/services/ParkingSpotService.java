@@ -3,8 +3,8 @@ package com.bill.parking_control.services;
 import com.bill.parking_control.dtos.spot.ParkingSpotCreateDTO;
 import com.bill.parking_control.dtos.spot.ParkingSpotResponseDTO;
 import com.bill.parking_control.dtos.spot.ParkingSpotUpdateDto;
-import com.bill.parking_control.persitenses.entities.ParkingSpot.SpotStatus;
-import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+import com.bill.parking_control.persistences.entities.ParkingSpot.SpotStatus;
+import com.bill.parking_control.persistences.entities.Vehicle.VehicleType;
 
 import java.util.Optional;
 

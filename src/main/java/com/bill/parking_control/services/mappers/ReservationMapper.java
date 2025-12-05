@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import com.bill.parking_control.dtos.reservation.ReservationCreateDTO;
 import com.bill.parking_control.dtos.reservation.ReservationResponseDTO;
-import com.bill.parking_control.persitenses.entities.Client;
-import com.bill.parking_control.persitenses.entities.ParkingSpot;
-import com.bill.parking_control.persitenses.entities.Reservation;
+import com.bill.parking_control.persistences.entities.Client;
+import com.bill.parking_control.persistences.entities.ParkingSpot;
+import com.bill.parking_control.persistences.entities.Reservation;
 
 @Component
 public class ReservationMapper {

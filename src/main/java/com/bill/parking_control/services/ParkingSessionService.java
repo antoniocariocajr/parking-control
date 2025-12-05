@@ -3,7 +3,7 @@ package com.bill.parking_control.services;
 import com.bill.parking_control.dtos.session.ParkingSessionResponseDTO;
 import com.bill.parking_control.dtos.session.ParkingSessionStartDTO;
 import com.bill.parking_control.dtos.session.ParkingSessionUpdateDto;
-import com.bill.parking_control.persitenses.entities.ParkingSession.SessionStatus;
+import com.bill.parking_control.persistences.entities.ParkingSession.SessionStatus;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.bill.parking_control.dtos.spot.ParkingSpotCreateDTO;
 import com.bill.parking_control.dtos.spot.ParkingSpotResponseDTO;
 import com.bill.parking_control.dtos.spot.ParkingSpotUpdateDto;
-import com.bill.parking_control.persitenses.entities.ParkingSpot;
+import com.bill.parking_control.persistences.entities.ParkingSpot;
 
 @Component
 public class ParkingSpotMapper {

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.bill.parking_control.dtos.payment.PaymentResponseDTO;
-import com.bill.parking_control.persitenses.entities.Payment;
-import com.bill.parking_control.persitenses.entities.Payment.PaymentMethod;
-import com.bill.parking_control.persitenses.entities.Payment.PaymentStatus;
-import com.bill.parking_control.persitenses.repositories.PaymentRepository;
+import com.bill.parking_control.persistences.entities.Payment;
+import com.bill.parking_control.persistences.entities.Payment.PaymentMethod;
+import com.bill.parking_control.persistences.entities.Payment.PaymentStatus;
+import com.bill.parking_control.persistences.repositories.PaymentRepository;
 import com.bill.parking_control.services.PaymentService;
 import com.bill.parking_control.services.mappers.PaymentMapper;
 

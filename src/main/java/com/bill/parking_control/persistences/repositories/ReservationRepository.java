@@ -1,8 +1,8 @@
-package com.bill.parking_control.persitenses.repositories;
+package com.bill.parking_control.persistences.repositories;
 
-import com.bill.parking_control.persitenses.entities.ParkingSpot;
-import com.bill.parking_control.persitenses.entities.Reservation;
-import com.bill.parking_control.persitenses.entities.Reservation.ReservationStatus;
+import com.bill.parking_control.persistences.entities.ParkingSpot;
+import com.bill.parking_control.persistences.entities.Reservation;
+import com.bill.parking_control.persistences.entities.Reservation.ReservationStatus;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

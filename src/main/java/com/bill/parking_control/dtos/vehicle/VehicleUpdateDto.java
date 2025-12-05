@@ -1,11 +1,11 @@
 package com.bill.parking_control.dtos.vehicle;
 
-import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+import com.bill.parking_control.persistences.entities.Vehicle.VehicleType;
 
 public record VehicleUpdateDto(
-        String licensePlate,
-        String brand,
-        String model,
-        String color,
-        VehicleType type) {
+                String licensePlate,
+                String brand,
+                String model,
+                String color,
+                VehicleType type) {
 }

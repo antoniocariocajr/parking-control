@@ -3,7 +3,7 @@ package com.bill.parking_control.controllers;
 import com.bill.parking_control.dtos.tariff.TariffCreateDTO;
 import com.bill.parking_control.dtos.tariff.TariffResponseDTO;
 import com.bill.parking_control.dtos.tariff.TariffUpdateDto;
-import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+import com.bill.parking_control.persistences.entities.Vehicle.VehicleType;
 import com.bill.parking_control.services.TariffService;
 
 import io.swagger.v3.oas.annotations.Operation;

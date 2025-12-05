@@ -3,9 +3,9 @@ package com.bill.parking_control.services.impl;
 import com.bill.parking_control.dtos.user.UserCreateDTO;
 import com.bill.parking_control.dtos.user.UserResponseDTO;
 import com.bill.parking_control.dtos.user.UserUpdateDto;
-import com.bill.parking_control.persitenses.entities.User;
-import com.bill.parking_control.persitenses.entities.User.Role;
-import com.bill.parking_control.persitenses.repositories.UserRepository;
+import com.bill.parking_control.persistences.entities.User;
+import com.bill.parking_control.persistences.entities.User.Role;
+import com.bill.parking_control.persistences.repositories.UserRepository;
 import com.bill.parking_control.services.UserService;
 import com.bill.parking_control.services.mappers.UserMapper;
 

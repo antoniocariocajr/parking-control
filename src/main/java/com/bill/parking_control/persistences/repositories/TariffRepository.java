@@ -1,8 +1,8 @@
-package com.bill.parking_control.persitenses.repositories;
+package com.bill.parking_control.persistences.repositories;
 
-import com.bill.parking_control.persitenses.entities.Tariff;
-import com.bill.parking_control.persitenses.entities.Vehicle;
-import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+import com.bill.parking_control.persistences.entities.Tariff;
+import com.bill.parking_control.persistences.entities.Vehicle;
+import com.bill.parking_control.persistences.entities.Vehicle.VehicleType;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

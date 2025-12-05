@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import com.bill.parking_control.dtos.vehicle.VehicleCreateDTO;
 import com.bill.parking_control.dtos.vehicle.VehicleResponseDTO;
 import com.bill.parking_control.dtos.vehicle.VehicleUpdateDto;
-import com.bill.parking_control.persitenses.entities.Client;
-import com.bill.parking_control.persitenses.entities.Vehicle;
+import com.bill.parking_control.persistences.entities.Client;
+import com.bill.parking_control.persistences.entities.Vehicle;
 
 @Component
 public class VehicleMapper {

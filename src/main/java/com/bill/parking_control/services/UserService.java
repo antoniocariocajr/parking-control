@@ -3,7 +3,7 @@ package com.bill.parking_control.services;
 import com.bill.parking_control.dtos.user.UserCreateDTO;
 import com.bill.parking_control.dtos.user.UserResponseDTO;
 import com.bill.parking_control.dtos.user.UserUpdateDto;
-import com.bill.parking_control.persitenses.entities.User.Role;
+import com.bill.parking_control.persistences.entities.User.Role;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

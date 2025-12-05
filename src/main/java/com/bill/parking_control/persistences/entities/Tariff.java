@@ -1,4 +1,4 @@
-package com.bill.parking_control.persitenses.entities;
+package com.bill.parking_control.persistences.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.bill.parking_control.persitenses.entities.Vehicle.VehicleType;
+import com.bill.parking_control.persistences.entities.Vehicle.VehicleType;
 
 @NoArgsConstructor
 @AllArgsConstructor

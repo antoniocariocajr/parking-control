@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bill.parking_control.persitenses.entities.User;
-import com.bill.parking_control.persitenses.repositories.UserRepository;
+import com.bill.parking_control.persistences.entities.User;
+import com.bill.parking_control.persistences.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

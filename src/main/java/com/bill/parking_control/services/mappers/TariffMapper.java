@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.bill.parking_control.dtos.tariff.TariffCreateDTO;
 import com.bill.parking_control.dtos.tariff.TariffResponseDTO;
 import com.bill.parking_control.dtos.tariff.TariffUpdateDto;
-import com.bill.parking_control.persitenses.entities.Tariff;
+import com.bill.parking_control.persistences.entities.Tariff;
 
 @Component
 public class TariffMapper {

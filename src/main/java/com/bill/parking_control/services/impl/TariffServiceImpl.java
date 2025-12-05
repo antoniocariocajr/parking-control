@@ -3,9 +3,9 @@ package com.bill.parking_control.services.impl;
 import com.bill.parking_control.dtos.tariff.TariffCreateDTO;
 import com.bill.parking_control.dtos.tariff.TariffResponseDTO;
 import com.bill.parking_control.dtos.tariff.TariffUpdateDto;
-import com.bill.parking_control.persitenses.entities.Tariff;
-import com.bill.parking_control.persitenses.entities.Vehicle;
-import com.bill.parking_control.persitenses.repositories.TariffRepository;
+import com.bill.parking_control.persistences.entities.Tariff;
+import com.bill.parking_control.persistences.entities.Vehicle;
+import com.bill.parking_control.persistences.repositories.TariffRepository;
 import com.bill.parking_control.services.TariffService;
 import com.bill.parking_control.services.mappers.TariffMapper;
 

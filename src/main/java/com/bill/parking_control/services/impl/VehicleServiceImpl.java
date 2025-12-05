@@ -3,10 +3,10 @@ package com.bill.parking_control.services.impl;
 import com.bill.parking_control.dtos.vehicle.VehicleCreateDTO;
 import com.bill.parking_control.dtos.vehicle.VehicleResponseDTO;
 import com.bill.parking_control.dtos.vehicle.VehicleUpdateDto;
-import com.bill.parking_control.persitenses.entities.Client;
-import com.bill.parking_control.persitenses.entities.Vehicle;
-import com.bill.parking_control.persitenses.repositories.ClientRepository;
-import com.bill.parking_control.persitenses.repositories.VehicleRepository;
+import com.bill.parking_control.persistences.entities.Client;
+import com.bill.parking_control.persistences.entities.Vehicle;
+import com.bill.parking_control.persistences.repositories.ClientRepository;
+import com.bill.parking_control.persistences.repositories.VehicleRepository;
 import com.bill.parking_control.services.VehicleService;
 import com.bill.parking_control.services.mappers.VehicleMapper;
 
